@@ -11,6 +11,7 @@ use penrose::{
         bindings::{parse_keybindings_with_xmodmap, KeyEventHandler},
         Config, WindowManager, ClientSet
     },
+    extensions::hooks::add_ewmh_hooks,
     map,
     x11rb::RustConn,
     Result,
@@ -65,7 +66,9 @@ fn main() -> Result<()> {
 
     let conn = RustConn::new()?;
     let key_bindings = parse_keybindings_with_xmodmap(raw_key_bindings())?;
-    let wm = WindowManager::new(Config::default(), key_bindings, HashMap::new(), conn)?;
+    let config = add_ewmh_hooks(Config::default());
+
+    let wm = WindowManager::new(config, key_bindings, HashMap::new(), conn)?;
 
     wm.run()
 }
