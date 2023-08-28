@@ -23,6 +23,8 @@ fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
     let mut raw_bindings = map! {
         map_keys: str::to_string;
 
+        // check https://docs.rs/penrose_keysyms/0.3.3/src/penrose_keysyms/lib.rs.html#7-2053 for
+        // other keysyms
         "A-j" => modify_with(ClientSet::focus_down),
         "A-k" => modify_with(ClientSet::focus_up),
         "A-S-j" => modify_with(ClientSet::swap_down),
@@ -38,6 +40,13 @@ fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
         "A-S-Right" => send_layout_message(|| ExpandMain),
         "A-S-Left" => send_layout_message(|| ShrinkMain),
         "A-p" => spawn("rofi -show run"),
+        "XF86AudioMute" => spawn("amixer set Master toggle"),
+        "XF86AudioRaiseVolume" => spawn("amixer -D pulse sset Master 5%+"),
+        "XF86AudioLowerVolume" => spawn("amixer -D pulse sset Master 5%-"),
+        "XF86MonBrightnessUp" => spawn("xbacklight -inc 5 -ctrl intel_backlight"),
+        "XF86MonBrightnessDown" => spawn("xbacklight -dec 5 -ctrl intel_backlight"),
+        "Print" => spawn("gnome-screenshot"),
+        "A-S-Print" => spawn("gnome-screenshot -a"),
         "A-S-Return" => spawn("alacritty"),
         "A-S-q" => exit(),
     };
@@ -60,7 +69,7 @@ fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
 
 fn main() -> Result<()> {
     tracing_subscriber::fmt()
-        .with_env_filter("info")
+        .with_env_filter("trace")
         .finish()
         .init();
 
