@@ -45,8 +45,8 @@ fn raw_key_bindings() -> HashMap<String, Box<dyn KeyEventHandler<RustConn>>> {
         "XF86AudioLowerVolume" => spawn("amixer -D pulse sset Master 5%-"),
         "XF86MonBrightnessUp" => spawn("xbacklight -inc 5 -ctrl intel_backlight"),
         "XF86MonBrightnessDown" => spawn("xbacklight -dec 5 -ctrl intel_backlight"),
-        "Print" => spawn("gnome-screenshot"),
-        "A-S-Print" => spawn("gnome-screenshot -a"),
+        "Sys_Req" => spawn("gnome-screenshot"),
+        "A-S-Sys_Req" => spawn("gnome-screenshot -a"),
         "A-S-Return" => spawn("alacritty"),
         "A-S-q" => exit(),
     };
